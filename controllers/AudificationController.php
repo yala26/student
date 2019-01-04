@@ -87,7 +87,7 @@ class AudificationController extends MainController
 
     public function actionTest()
     {
-        return 'hello world';
+        return 'tkejnjtrnb';
     }
 
 }
