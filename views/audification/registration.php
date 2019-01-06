@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 <?php $form = ActiveForm::begin();?>
 <?=$form->field($model,'login')?>
 <?=$form->field($model,'pass')?>
-<?=$form->field($model,'name')?>
+<?=$form->field($model,'role')->checkbox(['label' => 'teacher'])?>
     <div class="form-group">
         <?= html::submitButton('registration',['class' => 'btn btn-primary'])?>
     </div>

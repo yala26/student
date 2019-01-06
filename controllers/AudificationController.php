@@ -18,7 +18,6 @@ class AudificationController extends MainController
     public function actionIndex()
     {
         $model = new Form();
-
         if (yii::$app->user->isGuest) {
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 if ($model->check()) {
@@ -26,14 +25,15 @@ class AudificationController extends MainController
                     $user->username = $model->login;
                     $user->password = $model->pass;
                     yii::$app->user->login($user, 3600 * 24);
-                    return $this->render('prof',
-                        ['model' => yii::$app->user->identity->username]
-                    );
-//                } else {
-//                    return $this->render('index',
-//                        ['model' => $model]
-//                    );
-//                }
+                    if ($model->authorization($user->username)) {
+                        return $this->render('prof',
+                            ['model' => 'hello teacher']
+                        );
+                    } else {
+                        return $this->render('prof2',
+                            ['model' => 'hello student']
+                        );
+                    }
                 } else {
                     yii::$app->session->setFlash('error', 'wrong login or password');
                     return $this->render('index',
@@ -44,7 +44,6 @@ class AudificationController extends MainController
                 return $this->render('index',
                     ['model' => $model]
                 );
-
             }
         } else {
             $username = yii::$app->user->identity;
@@ -52,20 +51,34 @@ class AudificationController extends MainController
             foreach ($username as $row) {
                 $name[] = $row;
             }
-            return $this->render('prof',
-                ['model' => $name[3]]
-            );
+            if ($model->authorization($name[1])) {
+                return $this->render('prof',
+                    ['model' => 'hello teacher']
+                );
+            } else {
+                return $this->render('prof2',
+                    ['model' => 'hello student']
+                );
+            }
         }
     }
 
     public function actionRegistration()
     {
         $model = new RegForm();
+        $user = new Form();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->reg()) {
-                return $this->render('prof',
-                    ['model' => $model->name]
-                );
+                if ($user->authorization($model->login)) {
+                    return $this->render('prof',
+                        ['model' => 'hello teacher']
+                    );
+                } else {
+                    return $this->render('prof',
+                        ['model' => 'hello student']
+                    );
+                }
+
             } else {
                 return $this->render('registration',
                     ['model' => $model]
@@ -83,11 +96,6 @@ class AudificationController extends MainController
         yii::$app->user->logout();
         return $this->redirect('/audification/index'
         );
-    }
-
-    public function actionTest()
-    {
-        return 'tkejnjtrnb';
     }
 
 }

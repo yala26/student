@@ -33,11 +33,12 @@ class Form extends Model
 
     public function check()
     {
-        $users = Users::find()->andWhere(['login' => $this->login])->all();
+        $users = Credential::find()->andWhere(['login' => $this->login])->all();
         $login = [];
         foreach ($users as $row) {
             $login['login'] = $row['login'];
             $login['pass'] = $row['pass'];
+            $login['role'] = $row['role'];
         }
         if (empty(!$login['login'])) {
             if (Yii::$app->getSecurity()->validatePassword($this->pass, $login['pass'])) {
@@ -49,5 +50,17 @@ class Form extends Model
             return false;
         }
     }
+
+    public function authorization($login)
+    {
+        $user = Credential::find()->andWhere(['login' => $login])->one();
+        if($user['role'] == 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
 }
 

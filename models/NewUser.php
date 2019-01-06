@@ -8,7 +8,7 @@
 
 namespace app\models;
 
-use app\models\Users;
+use app\models\Credential;
 use yii\web\IdentityInterface;
 use yii\db\ActiveRecord;
 use Yii;
@@ -24,7 +24,7 @@ class NewUser extends ActiveRecord implements IdentityInterface
 
     public static function tableName()
     {
-        return 'users';
+        return 'credential';
     }
 
     public function setPass($password)
@@ -65,7 +65,7 @@ class NewUser extends ActiveRecord implements IdentityInterface
     {
         $user = new Form();
         if ($user ->load(Yii::$app->request->post()) && $user ->validate()){
-            $users = Users::find()->andWhere(['login' => $user->login])->one();
+            $users = Credential::find()->andWhere(['login' => $user->login])->one();
             $this->id = $users->id;
         }
         return $this->id;

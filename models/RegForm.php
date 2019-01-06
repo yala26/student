@@ -15,27 +15,28 @@ class RegForm extends Model
 {
     public $login;
     public $pass;
-    public $name;
+    public $role;
 
     public function rules()
     {
         return [
-            [['login', 'pass', 'name'], 'required'],
+            [['login', 'pass'], 'required'],
+            [['role'], 'default', 'value' => '0'],
         ];
     }
 
     public function reg()
     {
-        $users = Users::find()->andWhere(['login' => $this->login])->all();
+        $users = Credential::find()->andWhere(['login' => $this->login])->all();
         $login = [];
         foreach ($users as $row) {
             $login['login'] = $row['login'];
         }
         if (empty($login['login'])) {
-            $user = new Users();
+            $user = new Credential();
             $user->login = $this->login;
-            $user->pass = yii::$app->security->generatePasswordHash($this->pass);;
-            $user->name = $this->name;
+            $user->pass = yii::$app->security->generatePasswordHash($this->pass);
+            $user->role = $this->role;
             if ($user->save()) {
                 return true;
             } else {
