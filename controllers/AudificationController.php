@@ -69,16 +69,8 @@ class AudificationController extends MainController
         $user = new Form();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->reg()) {
-                if ($user->authorization($model->login)) {
-                    return $this->render('prof',
-                        ['model' => 'hello teacher']
-                    );
-                } else {
-                    return $this->render('prof',
-                        ['model' => 'hello student']
-                    );
-                }
-
+                return $this->redirect('/audification/index'
+                );
             } else {
                 return $this->render('registration',
                     ['model' => $model]
