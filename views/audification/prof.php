@@ -1,22 +1,25 @@
 <?php
 
 use yii\helpers\Html;
-//$this->registerJsFile('web/js/student.js');
-//$this->registerJsFile('web/js/custom.js');
-
 ?>
 <p><?=$model?></p>
-
-<!--<table class="table table-hover table-bordered" >-->
-<!--    --><?php
-//    foreach ($model as $row) {
-//        ?>
-<!--        <tr>-->
-<!--            <td>--><?//= $row['teacher'] ?><!--</td>-->
-<!--            <td>--><?//= $row['object'] ?><!--</td>-->
-<!--            <td>--><?//= Html::a('sign up for a course', '#', ['class' => 'btn btn-success']) ?><!--</td>-->
-<!--        </tr>-->
-<!--    --><?// } ?>
-<!--</table>-->
-<div><?= Html::a('Logout ', '/audification/logout', ['class' => 'btn btn-primary']) ?>
+<nav class="navbar navbar-default ">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">menu <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><?= Html::a('profile setting', '/elective/profile_tch') ?></li>
+                    <li><a href="#">Your profile</a></li>
+                    <li><a href="#">your course</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!--<div >--><?//= Html::a('go ', '/elective/profile', ['class' => 'btn btn-primary']) ?>
+<!--</div>-->
+<div ><?= Html::a('Logout ', '/audification/logout', ['class' => 'btn btn-primary']) ?>
 </div>
