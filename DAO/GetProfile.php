@@ -28,9 +28,15 @@ class GetProfile
             $login[] = $row;
         }
         $user = Credential::find()->andWhere(['login' => $login[1]])->one();
-        $name = Students::find()->andWhere(['credential_id' => $user['id']])->one();
-        $this->name = $name['name'];
+        if ($user['role'] == 0) {
+            $name = Students::find()->andWhere(['credential_id' => $user['id']])->one();
+            $this->name = $name['name'];
+        } else {
+            $name = Teachers::find()->andWhere(['credential_id' => $user['id']])->one();
+            $this->name = $name['name'];
+        }
         return $this->name;
+
 
     }
 
@@ -42,8 +48,13 @@ class GetProfile
             $login[] = $row;
         }
         $user = Credential::find()->andWhere(['login' => $login[1]])->one();
-        $name = Students::find()->andWhere(['credential_id' => $user['id']])->one();
-        $this->email = $name['email'];
+        if ($user['role'] == 0) {
+            $name = Students::find()->andWhere(['credential_id' => $user['id']])->one();
+            $this->email = $name['email'];
+        } else {
+            $name = Teachers::find()->andWhere(['credential_id' => $user['id']])->one();
+            $this->email = $name['email'];
+        }
         return $this->email;
     }
 
@@ -67,7 +78,7 @@ class GetProfile
             } else {
                 return false;
             }
-        }else{
+        } else {
             return true;
         }
     }
@@ -80,8 +91,13 @@ class GetProfile
             $login[] = $row;
         }
         $credential_id = Credential::find()->andWhere(['login' => $login[1]])->one();
-        $student_id = Students::find()->andWhere(['credential_id' => $credential_id['id']])->one();
-        return $student_id['id'];
+        if ($credential_id['role'] == 0) {
+            $student_id = Students::find()->andWhere(['credential_id' => $credential_id['id']])->one();
+            return $student_id['id'];
+        } else {
+            $teacher_id = Teachers::find()->andWhere(['credential_id' => $credential_id['id']])->one();
+            return $teacher_id['id'];
+        }
     }
 
     public function getTeacher_name($id)
@@ -93,7 +109,49 @@ class GetProfile
 
     public function getCourses($id)
     {
-        $courses = Courses::find()->andWhere($id)->one();
+        $courses = Courses::find()->andWhere(['id' => $id])->one();
         return $courses['course_name'];
+    }
+
+    public function getStudents($id)
+    {
+        $student_id = StudentCourses::find()->andWhere(['courses_id' => $id])->all();
+        $students = [];
+        foreach ($student_id as $row) {
+            $name = Students::find()->andWhere(['id' => $row['student_id']])->one();
+            $students[] = $name;
+        }
+        return $students;
+    }
+
+    public function getStudent_courses_id($student_id, $courses_id)
+    {
+        $student_courses_id = [];
+        foreach ($student_id as $row) {
+            $student_courses_id[] = StudentCourses::find()->andWhere(['courses_id' => $courses_id])->
+            andWhere(['student_id' => $row])->one();
+        }
+        $id = [];
+        foreach ($student_courses_id as $row) {
+            $id[] = $row['id'];
+        }
+        return $id;
+    }
+
+    public function getValue($id)
+    {
+        $result = StudentCourses::find()->andWhere(['id' => $id])->one();
+        return $result['value'];
+    }
+
+    public function getCommut($id)
+    {
+        $result = StudentCourses::find()->andWhere(['id' => $id])->one();
+        return $result['commit'];
+    }
+
+    public function Add_value()
+    {
+        return true;
     }
 }

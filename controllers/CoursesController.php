@@ -46,14 +46,44 @@ class CoursesController extends MainController
     public function actionSchedule()
     {
         $student_id = new GetProfile();
-        $student = new StudentCourses();
-//        $courses = $student->courses->course_name;
-//        $teachers = $student->courses->teachers->name;
-//        $value = $student->value;
-//        $commit = $student->commit;
         $model = StudentCourses::find()->andWhere(['student_id' => $student_id->getStudent_id()])->all();
         return $this->render('schedule',
             ['model' => $model]
         );
+    }
+
+    public function actionAttestation()
+    {
+        $teacher_id = new GetProfile();
+        $model = Courses::find()->andWhere(['teachers_id' => $teacher_id->getStudent_id()])->all();
+        $students = new GetProfile();
+        $courses_id =[];
+        $student_id = [];
+        foreach ($model as $row){
+            $courses_id[] = $row['id'];
+            foreach ($students->getStudents($row['id']) as $row2) {
+                $student_id[] = $row2['id'];
+
+            }
+        }
+        $teacher_id->getStudent_courses_id($student_id,$courses_id);
+        return $this->render('attestation',
+            ['student_courses_id' =>  $teacher_id->getStudent_courses_id($student_id,$courses_id),
+                'model' => $model]
+        );
+    }
+
+    public function actionUpdate_value()
+    {
+        $student_courses = StudentCourses::find()->andWhere(['id' => $_POST['id']])->one();
+        $student_courses->value = $_POST['value'];
+        $student_courses->save();
+    }
+
+    public function actionUpdate_commit()
+    {
+        $student_courses = StudentCourses::find()->andWhere(['id' => $_POST['id']])->one();
+        $student_courses->commit = $_POST['commit'];
+        $student_courses->save();
     }
 }

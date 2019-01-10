@@ -63,6 +63,7 @@ class ElectiveController extends MainController
     {
         $model = new TeachersForm();
         $teacher = new GetProfile();
+
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->change_profile()) {
                 return $this->render('profile_tch',

@@ -1,6 +1,6 @@
 <?php
-
 use yii\helpers\Html;
+
 ?>
 <p><?=$model?></p>
 <nav class="navbar navbar-default ">
@@ -10,8 +10,7 @@ use yii\helpers\Html;
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">menu <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><?= Html::a('profile setting', '/elective/profile_tch') ?></li>
-                    <li><a href="#">Your profile</a></li>
-                    <li><a href="#">your course</a></li>
+                    <li><?= Html::a('rate course', '/courses/attestation') ?></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="#">logout</a></li>
                 </ul>
