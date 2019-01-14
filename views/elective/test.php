@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Valera Yalov4uk
+ * GetUser: Valera Yalov4uk
  * Date: 01/06/2019
  * Time: 8:09 PM
  */

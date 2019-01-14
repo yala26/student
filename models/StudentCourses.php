@@ -47,7 +47,7 @@ class StudentCourses extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'student_id' => 'Student ID',
+            'student_id' => 'GetStudent ID',
             'courses_id' => 'Courses ID',
             'value' => 'Value',
             'commit' => 'Commit',

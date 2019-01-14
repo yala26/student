@@ -33,15 +33,10 @@ class Form extends Model
 
     public function check()
     {
-        $users = Credential::find()->andWhere(['login' => $this->login])->all();
-        $login = [];
-        foreach ($users as $row) {
-            $login['login'] = $row['login'];
-            $login['pass'] = $row['pass'];
-            $login['role'] = $row['role'];
-        }
-        if (empty(!$login['login'])) {
-            if (Yii::$app->getSecurity()->validatePassword($this->pass, $login['pass'])) {
+        $users = Credential::find()->andWhere(['login' => $this->login])->one();
+
+        if (empty(!$users['login'])) {
+            if (Yii::$app->getSecurity()->validatePassword($this->pass, $users['pass'])) {
                 return true;
             } else {
                 return false;

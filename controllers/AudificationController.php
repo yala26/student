@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Valera Yalov4uk
+ * GetUser: Valera Yalov4uk
  * Date: 12/11/2018
  * Time: 6:24 PM
  */
@@ -26,12 +26,10 @@ class AudificationController extends MainController
                     $user->password = $model->pass;
                     yii::$app->user->login($user, 3600 * 24);
                     if ($model->authorization($user->username)) {
-                        return $this->render('prof',
-                            ['model' => 'hello teacher']
+                        return $this->redirect('/elective/profile_teacher'
                         );
                     } else {
-                        return $this->render('prof2',
-                            ['model' => 'hello student']
+                        return $this->redirect('/elective/profile_student'
                         );
                     }
                 } else {
@@ -52,21 +50,20 @@ class AudificationController extends MainController
                 $name[] = $row;
             }
             if ($model->authorization($name[1])) {
-                return $this->render('prof',
-                    ['model' => 'hello teacher']
+                return $this->redirect('/elective/profile_teacher'
                 );
             } else {
-                return $this->render('prof2',
-                    ['model' => 'hello student']
+                return $this->redirect('/elective/profile_student'
                 );
             }
         }
     }
 
+
+
     public function actionRegistration()
     {
         $model = new RegForm();
-        $user = new Form();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->reg()) {
                 return $this->redirect('/audification/index'
@@ -89,6 +86,5 @@ class AudificationController extends MainController
         return $this->redirect('/audification/index'
         );
     }
-
 
 }

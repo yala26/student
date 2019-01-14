@@ -1,13 +1,15 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Valera Yalov4uk
+ * GetUser: Valera Yalov4uk
  * Date: 01/09/2019
  * Time: 12:44 PM
  */
 
-use app\DAO\GetProfile;
+use app\models\DAO\GetUser;
 use yii\helpers\Html;
+use app\models\DAO\GetStudent;
+use app\models\DAO\GetStudentCourses;
 
 
 ?>
@@ -26,7 +28,8 @@ use yii\helpers\Html;
     </thead>
     <tbody>
     <?
-    $students = new GetProfile();
+    $students = new GetStudent();
+    $result = new GetStudentCourses();
     $i = 0;
     foreach ($model as $row) { ?>
         <?
@@ -36,8 +39,8 @@ use yii\helpers\Html;
                 <td class="student_courses_id"><?=$student_courses_id[$i]?></td>
                 <td><?= $row['course_name'] ?></td>
                 <td><?= $row2['name'] ?></td>
-                <td class="td"><?=$students->getValue($student_courses_id[$i])?></td>
-                <td class="td2"><?=$students->getCommut($student_courses_id[$i])?></td>
+                <td class="td"><?=$result->getValue_by_id($student_courses_id[$i])?></td>
+                <td class="td2"><?=$result->getCommit_by_id($student_courses_id[$i])?></td>
             </tr>
             <?$i ++?>
         <? } ?>

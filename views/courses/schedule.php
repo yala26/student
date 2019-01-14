@@ -1,15 +1,18 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Valera Yalov4uk
+ * GetUser: Valera Yalov4uk
  * Date: 01/08/2019
  * Time: 4:55 PM
  */
+
+use app\models\DAO\GetCourses;
+use app\models\DAO\GetUser;
 use app\models\Teachers;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\models\StudentCourses;
-use app\DAO\GetProfile;
+use app\models\DAO\GetTeacher;
 
 ?>
 <div ><?= Html::a('menu', '/audification', ['class' => 'btn btn-primary']) ?>
@@ -26,12 +29,13 @@ use app\DAO\GetProfile;
     </thead>
     <tbody>
     <?
-    $name = new GetProfile();
+    $courses_name = new GetCourses();
+    $teacher_name = new GetTeacher();
     foreach ($model as $row) {
         ?>
         <tr>
-            <td><?= $name->getCourses($row['courses_id']) ?></td>
-            <td><?= $name->getTeacher_name($row['courses_id']) ?></td>
+            <td><?= $courses_name->getCourses_name($row['courses_id']) ?></td>
+            <td><?=  $teacher_name->getTeacher_name_by_courses_id($row['courses_id']) ?></td>
             <td><?= $row['value'] ?></td>
             <td><?= $row['commit'] ?></td>
         </tr>

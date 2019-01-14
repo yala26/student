@@ -1,14 +1,14 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Valera Yalov4uk
+ * GetUser: Valera Yalov4uk
  * Date: 01/04/2019
  * Time: 3:02 PM
  */
 
 namespace app\controllers;
 
-use app\DAO\GetProfile;
+use app\models\DAO\GetUser;
 use app\models\Courses;
 use app\models\StudentCourses;
 use app\models\StudentsForm;
@@ -18,24 +18,39 @@ use Yii;
 
 class ElectiveController extends MainController
 {
-    public function actionProfile_st()
+
+    public function actionProfile_teacher()
     {
-        $student = new GetProfile();
+        return $this->render('profile_teacher',
+            ['model' => 'hello teacher']
+        );
+    }
+
+    public function actionProfile_student()
+    {
+        return $this->render('profile_student',
+            ['model' => 'hello student']
+        );
+    }
+
+    public function actionSetting_st()
+    {
+        $student = new GetUser();
         $model = new StudentsForm;
-        return $this->render('profile_st',
+        return $this->render('setting_st',
             ['model' => $model,
                 'name' => $student->getName(),
                 'email' => $student->getEmail()]
         );
     }
 
-    public function actionAdd_profile()
+    public function actionAdd_setting_st()
     {
         $model = new StudentsForm();
-        $student = new GetProfile();
+        $student = new GetUser();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->change_profile()) {
-                return $this->render('profile_st',
+                return $this->render('setting_st',
                     ['model' => $model,
                         'name' => $student->getName(),
                         'email' => $student->getEmail()]
@@ -44,29 +59,29 @@ class ElectiveController extends MainController
                 return 'fatal error';
             }
         } else {
-            return 'fatal errorrrr';
+            return 'fatal error';
         }
     }
 
-    public function actionProfile_tch()
+    public function actionSetting_tch()
     {
-        $teacher = new GetProfile();
+        $teacher = new GetUser();
         $model = new TeachersForm();
-        return $this->render('profile_tch',
+        return $this->render('setting_tch',
             ['model' => $model,
                 'name' => $teacher->getName(),
                 'email' => $teacher->getEmail()]
         );
     }
 
-    public function actionAdd_profile2()
+    public function actionAdd_setting_tch()
     {
         $model = new TeachersForm();
-        $teacher = new GetProfile();
+        $teacher = new GetUser();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->change_profile()) {
-                return $this->render('profile_tch',
+                return $this->render('setting_tch',
                     ['model' => $model,
                         'name' => $teacher->getName(),
                         'email' => $teacher->getEmail()]

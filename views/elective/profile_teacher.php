@@ -1,4 +1,11 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * GetUser: Valera Yalov4uk
+ * Date: 01/14/2019
+ * Time: 2:19 PM
+ */
+
 use yii\helpers\Html;
 
 ?>
@@ -9,7 +16,7 @@ use yii\helpers\Html;
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">menu <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><?= Html::a('profile setting', '/elective/profile_tch') ?></li>
+                    <li><?= Html::a('profile setting', '/elective/setting_tch') ?></li>
                     <li><?= Html::a('rate course', '/courses/attestation') ?></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="#">logout</a></li>

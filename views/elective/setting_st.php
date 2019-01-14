@@ -2,17 +2,17 @@
 /**
  * Created by PhpStorm.
  * User: Valera Yalov4uk
- * Date: 01/07/2019
- * Time: 6:20 PM
+ * Date: 01/06/2019
+ * Time: 6:49 PM
  */
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use app\DAO\GetProfile;
+use app\models\DAO\GetUser;
 
 ?>
 <div ><?= Html::a('menu', '/audification', ['class' => 'btn btn-primary']) ?>
 </div>
-<?php $form = ActiveForm::begin(['action'=>'add_profile2']);?>
+<?php $form = ActiveForm::begin(['action'=>'add_setting_st']);?>
 <?=$form->field($model,'name')->textInput(['value' => $name])?>
 <?=$form->field($model,'email')->textInput(['value' => $email])?>
 <div class="form-group">
